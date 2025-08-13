@@ -1,30 +1,27 @@
 import { Share2, MessageCircle, Heart } from "lucide-react";
+import { Widget } from "@/components/ui/widget";
 
 export function SocialWidget() {
   return (
-    <div className="dashboard-widget animate-scale-in">
-      <div className="flex items-center gap-2 mb-4">
-        <Share2 className="w-5 h-5 text-primary" />
-        <h3 className="font-semibold">Social Highlights</h3>
+    <Widget
+      title="Social Highlights"
+      icon={<Share2 className="w-5 h-5" />}
+    >
+      <div className="flex items-center justify-between hover-subtle rounded-lg p-2 -m-2 transition-colors cursor-pointer">
+        <div className="flex items-center gap-2">
+          <MessageCircle className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
+          <span className="text-sm">Messages</span>
+        </div>
+        <span className="text-sm font-medium">3 new</span>
       </div>
 
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <MessageCircle className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm">Messages</span>
-          </div>
-          <span className="text-sm font-medium">3 new</span>
+      <div className="flex items-center justify-between hover-subtle rounded-lg p-2 -m-2 transition-colors cursor-pointer">
+        <div className="flex items-center gap-2">
+          <Heart className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
+          <span className="text-sm">Mentions</span>
         </div>
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Heart className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm">Mentions</span>
-          </div>
-          <span className="text-sm font-medium">2 new</span>
-        </div>
+        <span className="text-sm font-medium">2 new</span>
       </div>
-    </div>
+    </Widget>
   );
 }

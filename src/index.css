@@ -118,12 +118,36 @@
     animation: scale-in 0.3s ease-out forwards;
   }
 
+  .animate-slide-right {
+    animation: slide-right 0.3s ease-in-out forwards;
+  }
+
+  .animate-slide-left {
+    animation: slide-left 0.3s ease-in-out forwards;
+  }
+
   .hover-lift {
     @apply transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-lg;
   }
 
   .hover-subtle {
     @apply transition-all duration-200 ease-out hover:bg-accent/50;
+  }
+
+  .focus-ring {
+    @apply focus:ring-2 focus:ring-primary/20 focus:ring-offset-2 focus:ring-offset-background;
+  }
+
+  .interactive-element {
+    @apply transition-all duration-200 ease-out hover:bg-accent/50 focus:ring-2 focus:ring-primary/20 focus:outline-none;
+  }
+
+  .sidebar-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  .sidebar-content-transition {
+    @apply transition-all duration-200 ease-in-out;
   }
 
   /* Widget base styling */
@@ -136,23 +160,20 @@
   }
 }
 
-@layer utilities {
-  /* Custom keyframes */
+@layer base {
   @keyframes fade-in {
     from {
       opacity: 0;
-      transform: translateY(20px);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
     }
   }
 
   @keyframes slide-up {
     from {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(20px);
     }
     to {
       opacity: 1;
@@ -171,7 +192,133 @@
     }
   }
 
+  @keyframes slide-right {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-left {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+
+@layer utilities {
+  /* Custom utility classes */
   .stagger-animation > * {
     animation-delay: calc(var(--stagger-delay, 0) * 100ms);
+  }
+  
+  .focus-visible-ring {
+    @apply focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  /* Ensure widget remove buttons are never clipped */
+  .dashboard-container,
+  .dashboard-container * {
+    overflow: visible !important;
+  }
+
+  /* React Grid Layout custom styles */
+  .react-grid-layout {
+    position: relative;
+    overflow: visible !important;
+  }
+  
+  .react-grid-item {
+    transition: all 200ms ease;
+    transition-property: left, top, width, height;
+    overflow: visible !important;
+  }
+  
+  .react-grid-item.cssTransforms {
+    transition-property: transform, width, height;
+  }
+  
+  .react-grid-item > .react-resizable-handle {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    bottom: 2px;
+    right: 2px;
+    background-color: hsl(var(--muted));
+    border: 1px solid hsl(var(--border));
+    border-radius: 3px;
+    cursor: se-resize;
+    transition: all 0.2s ease;
+    z-index: 10;
+  }
+  
+  .react-grid-item > .react-resizable-handle:hover {
+    background-color: hsl(var(--accent));
+    border-color: hsl(var(--primary));
+    transform: scale(1.1);
+  }
+  
+  .react-grid-item > .react-resizable-handle::after {
+    content: "";
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    width: 4px;
+    height: 4px;
+    border-right: 2px solid hsl(var(--muted-foreground));
+    border-bottom: 2px solid hsl(var(--muted-foreground));
+    opacity: 0.7;
+  }
+  
+  .react-grid-item.react-grid-placeholder {
+    background-color: hsl(var(--primary) / 0.1);
+    border: 2px dashed hsl(var(--primary) / 0.4);
+    border-radius: 12px !important;
+    opacity: 0.7;
+    transition-duration: 200ms;
+    z-index: 2;
+    user-select: none;
+  }
+  
+  .drag-handle {
+    cursor: move !important;
+    user-select: none;
+  }
+  
+  .drag-handle:active {
+    cursor: grabbing !important;
+  }
+  
+  /* Ensure widgets are fully visible during drag */
+  .react-grid-item.react-draggable-dragging {
+    z-index: 1000;
+    overflow: visible !important;
+  }
+  
+  .widget-item {
+    overflow: visible !important;
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  /* Ensure proper spacing between widgets */
+  .react-grid-layout {
+    min-height: 100%;
+  }
+
+  /* Fix for widget content padding to accommodate resize handle */
+  .widget-item > div > div:last-child {
+    padding-bottom: 20px;
+    padding-right: 20px;
   }
 }

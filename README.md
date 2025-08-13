@@ -1,73 +1,148 @@
-# Welcome to your Lovable project
+# Personal Dashboard
 
-## Project info
+A modern, AI-powered personal dashboard web application built with React, TypeScript, and Tailwind CSS. This dashboard provides a centralized platform for managing daily activities, accessing real-time information, and gaining AI-driven insights through an intuitive, widget-based interface.
 
-**URL**: https://lovable.dev/projects/ba2b9174-dcf2-4729-8d6f-0f8fd678b2ee
+## Features
 
-## How can I edit this code?
+### Core Functionality
+- **Modular Widget Dashboard** - Customizable dashboard with resizable widgets for different modules
+- **Task Management** - Add, complete, and track personal tasks with completion status
+- **Multi-Module Navigation** - Dedicated pages for Tasks, Weather, Calendar, News, Health, Productivity, Finance, Journal, AI Insights, and Social features
+- **Theme Support** - Light and dark mode switching with persistence
+- **Responsive Design** - Optimized for mobile, tablet, and desktop devices
+- **Global Search** - Search functionality across dashboard content
+- **Notifications** - Toast notification system for alerts and updates
 
-There are several ways of editing your application.
+### Planned Integrations
+- Weather API for real-time weather data
+- News API for personalized news feeds
+- AI API (xAI Grok) for intelligent insights
+- Calendar integration with event management
+- Health metrics tracking
+- Productivity analytics with charts
+- Financial management tools
+- Social media integration
 
-**Use Lovable**
+## Technology Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ba2b9174-dcf2-4729-8d6f-0f8fd678b2ee) and start prompting.
+### Frontend Framework
+- **React** 18.3.1 - Modern React with hooks and functional components
+- **TypeScript** 5.8.3 - Type-safe development with strict type checking
+- **Vite** 5.4.19 - Fast build tool and development server
 
-Changes made via Lovable will be committed automatically to this repo.
+### UI & Styling
+- **Tailwind CSS** 3.4.17 - Utility-first CSS framework
+- **shadcn/ui** - High-quality, accessible React components built on Radix UI
+- **Lucide React** - Beautiful, customizable icon library
+- **Tailwind Animate** - Smooth animations and transitions
 
-**Use your preferred IDE**
+### Data Management
+- **TanStack Query** 5.83.0 - Powerful data fetching and caching
+- **React Hook Form** 7.61.1 - Performant forms with validation
+- **Zod** 3.25.76 - TypeScript-first schema validation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Routing & Navigation
+- **React Router DOM** 6.30.1 - Client-side routing with nested routes
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Getting Started
 
-Follow these steps:
+### Prerequisites
+- **Node.js** 18.0.0 or higher
+- **npm** or **bun** package manager
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Installation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd personal-dashboard
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   bun install
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+3. **Start development server**
+   ```bash
+   npm run dev
+   # or
+   bun dev
+   ```
+   
+   The development server will start at `http://localhost:8080`
+
+## Available Scripts
+
+### Development
+- `npm run dev` - Start development server with hot reload
+- `npm run type-check` - Run TypeScript type checking
+
+### Building
+- `npm run build` - Build for production (optimized bundle)
+- `npm run build:dev` - Build for development environment
+- `npm run preview` - Preview production build locally
+
+### Code Quality
+- `npm run lint` - Run ESLint for code linting
+- `npm run lint:fix` - Fix auto-fixable ESLint issues
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── ui/                    # shadcn/ui components
+│   ├── dashboard/
+│   │   ├── DashboardOverview.tsx
+│   │   └── widgets/           # Dashboard widgets
+│   ├── AIHomepage.tsx
+│   ├── AppSidebar.tsx
+│   └── Dashboard.tsx
+├── pages/                     # Route pages
+├── hooks/                     # Custom React hooks
+├── lib/                       # Utility functions
+└── App.tsx                    # Main app component
 ```
 
-**Edit a file directly in GitHub**
+## Environment Configuration
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The application runs on port 8080 by default and supports:
+- Host configuration: `::` (all interfaces)
+- Path aliases: `@/` points to `src/`
+- Development: Component tagging with Lovable tagger
 
-**Use GitHub Codespaces**
+## Browser Support
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- Chrome (latest 2 versions)
+- Firefox (latest 2 versions)
+- Safari (latest 2 versions)
+- Edge (latest 2 versions)
 
-## What technologies are used for this project?
+## Performance Goals
 
-This project is built with:
+- **Initial Load Time**: < 2 seconds on 4G connection
+- **Bundle Size**: < 500 KB (minified and gzipped)
+- **Accessibility**: WCAG 2.1 AA compliance
+- **Responsive**: Mobile-first responsive design
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Contributing
 
-## How can I deploy this project?
+1. Follow the existing code style and TypeScript conventions
+2. Use descriptive variable names and add proper type annotations
+3. Include proper error handling and loading states
+4. Test across supported browsers
+5. Ensure accessibility standards are met
 
-Simply open [Lovable](https://lovable.dev/projects/ba2b9174-dcf2-4729-8d6f-0f8fd678b2ee) and click on Share -> Publish.
+## Future Roadmap
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- [ ] API integrations for weather, news, and AI insights
+- [ ] Offline support with data caching
+- [ ] Widget customization and persistence
+- [ ] Advanced productivity analytics
+- [ ] Mobile app development with React Native
+- [ ] Real-time data synchronization

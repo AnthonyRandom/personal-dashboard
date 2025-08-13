@@ -16,8 +16,14 @@ import InsightsPage from "./pages/InsightsPage";
 import SocialPage from "./pages/SocialPage";
 import NotFound from "./pages/NotFound";
 import { Dashboard } from "./components/Dashboard";
+import { DashboardOverview } from "./components/dashboard/DashboardOverview";
 
 const queryClient = new QueryClient();
+
+// Create a wrapper component for dashboard pages
+const DashboardPageWrapper = ({ children }: { children: React.ReactNode }) => (
+  <Dashboard>{children}</Dashboard>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -27,16 +33,17 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/tasks" element={<TasksPage />} />
-          <Route path="/weather" element={<WeatherPage />} />
-          <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/health" element={<HealthPage />} />
-          <Route path="/productivity" element={<ProductivityPage />} />
-          <Route path="/finance" element={<FinancePage />} />
-          <Route path="/journal" element={<JournalPage />} />
-          <Route path="/insights" element={<InsightsPage />} />
-          <Route path="/social" element={<SocialPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/tasks" element={<DashboardPageWrapper><TasksPage /></DashboardPageWrapper>} />
+          <Route path="/weather" element={<DashboardPageWrapper><WeatherPage /></DashboardPageWrapper>} />
+          <Route path="/calendar" element={<DashboardPageWrapper><CalendarPage /></DashboardPageWrapper>} />
+          <Route path="/news" element={<DashboardPageWrapper><NewsPage /></DashboardPageWrapper>} />
+          <Route path="/health" element={<DashboardPageWrapper><HealthPage /></DashboardPageWrapper>} />
+          <Route path="/productivity" element={<DashboardPageWrapper><ProductivityPage /></DashboardPageWrapper>} />
+          <Route path="/finance" element={<DashboardPageWrapper><FinancePage /></DashboardPageWrapper>} />
+          <Route path="/journal" element={<DashboardPageWrapper><JournalPage /></DashboardPageWrapper>} />
+          <Route path="/insights" element={<DashboardPageWrapper><InsightsPage /></DashboardPageWrapper>} />
+          <Route path="/social" element={<DashboardPageWrapper><SocialPage /></DashboardPageWrapper>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
