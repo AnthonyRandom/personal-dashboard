@@ -21,27 +21,30 @@ export function TasksWidget() {
           <Plus className="w-4 h-4" />
         </Button>
       </div>
-      
+
       <div className="space-y-3">
         {tasks.slice(0, 3).map((task) => (
           <div key={task.id} className="flex items-center space-x-2 group">
-            <Checkbox 
+            <Checkbox
               checked={task.completed}
               className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
             />
-            <span className={`text-sm flex-1 transition-all ${
-              task.completed 
-                ? "line-through text-muted-foreground" 
-                : "text-foreground group-hover:text-primary"
-            }`}>
+            <span
+              className={`text-sm flex-1 transition-all ${
+                task.completed
+                  ? "line-through text-muted-foreground"
+                  : "text-foreground group-hover:text-primary"
+              }`}
+            >
               {task.text}
             </span>
           </div>
         ))}
-        
+
         <div className="pt-2 border-t border-border">
           <p className="text-xs text-muted-foreground">
-            {tasks.filter(t => !t.completed).length} of {tasks.length} remaining
+            {tasks.filter((t) => !t.completed).length} of {tasks.length}{" "}
+            remaining
           </p>
         </div>
       </div>

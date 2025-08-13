@@ -1,11 +1,22 @@
-import { TrendingUp, Target, Clock, BarChart3, Calendar, Zap } from "lucide-react";
+import {
+  TrendingUp,
+  Target,
+  Clock,
+  BarChart3,
+  Calendar,
+  Zap,
+} from "lucide-react";
 
 export default function ProductivityPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Productivity Insights</h1>
-        <p className="text-muted-foreground">Track your productivity patterns and optimize your workflow</p>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Productivity Insights
+        </h1>
+        <p className="text-muted-foreground">
+          Track your productivity patterns and optimize your workflow
+        </p>
       </div>
 
       {/* Key Metrics */}
@@ -49,7 +60,9 @@ export default function ProductivityPage() {
 
       {/* Weekly Overview */}
       <div className="dashboard-widget">
-        <h3 className="text-lg font-semibold mb-4">Weekly Productivity Overview</h3>
+        <h3 className="text-lg font-semibold mb-4">
+          Weekly Productivity Overview
+        </h3>
         <div className="grid grid-cols-7 gap-2">
           {[
             { day: "Mon", hours: 7.2, completed: 8, total: 10 },
@@ -65,12 +78,14 @@ export default function ProductivityPage() {
               <div className="space-y-1">
                 <p className="text-sm font-semibold">{day.hours}h</p>
                 <div className="w-full bg-background rounded-full h-2">
-                  <div 
-                    className="bg-primary h-2 rounded-full" 
+                  <div
+                    className="bg-primary h-2 rounded-full"
                     style={{ width: `${(day.completed / day.total) * 100}%` }}
                   ></div>
                 </div>
-                <p className="text-xs text-muted-foreground">{day.completed}/{day.total}</p>
+                <p className="text-xs text-muted-foreground">
+                  {day.completed}/{day.total}
+                </p>
               </div>
             </div>
           ))}
@@ -86,10 +101,30 @@ export default function ProductivityPage() {
           </div>
           <div className="space-y-4">
             {[
-              { category: "Deep Work", time: "3.2h", percentage: 52, color: "bg-blue-500" },
-              { category: "Meetings", time: "1.8h", percentage: 29, color: "bg-green-500" },
-              { category: "Communication", time: "0.8h", percentage: 13, color: "bg-yellow-500" },
-              { category: "Admin", time: "0.4h", percentage: 6, color: "bg-gray-500" },
+              {
+                category: "Deep Work",
+                time: "3.2h",
+                percentage: 52,
+                color: "bg-blue-500",
+              },
+              {
+                category: "Meetings",
+                time: "1.8h",
+                percentage: 29,
+                color: "bg-green-500",
+              },
+              {
+                category: "Communication",
+                time: "0.8h",
+                percentage: 13,
+                color: "bg-yellow-500",
+              },
+              {
+                category: "Admin",
+                time: "0.4h",
+                percentage: 6,
+                color: "bg-gray-500",
+              },
             ].map((item, index) => (
               <div key={index} className="space-y-2">
                 <div className="flex justify-between text-sm">
@@ -97,7 +132,7 @@ export default function ProductivityPage() {
                   <span className="text-muted-foreground">{item.time}</span>
                 </div>
                 <div className="w-full bg-muted rounded-full h-2">
-                  <div 
+                  <div
                     className={`h-2 rounded-full ${item.color}`}
                     style={{ width: `${item.percentage}%` }}
                   ></div>
@@ -116,10 +151,19 @@ export default function ProductivityPage() {
             {[
               { achievement: "Completed 5-day focus streak", date: "Today" },
               { achievement: "Reached weekly goal early", date: "Yesterday" },
-              { achievement: "Best productivity week this month", date: "3 days ago" },
-              { achievement: "No meeting overlap conflicts", date: "1 week ago" },
+              {
+                achievement: "Best productivity week this month",
+                date: "3 days ago",
+              },
+              {
+                achievement: "No meeting overlap conflicts",
+                date: "1 week ago",
+              },
             ].map((item, index) => (
-              <div key={index} className="flex items-start gap-3 p-2 rounded-lg hover:bg-accent/50 transition-colors">
+              <div
+                key={index}
+                className="flex items-start gap-3 p-2 rounded-lg hover:bg-accent/50 transition-colors"
+              >
                 <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
                 <div className="flex-1">
                   <p className="text-sm font-medium">{item.achievement}</p>
@@ -136,30 +180,42 @@ export default function ProductivityPage() {
         <h3 className="text-lg font-semibold mb-4">AI Recommendations</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-4 rounded-lg bg-blue-50 border border-blue-200">
-            <h4 className="font-medium text-blue-900 mb-2">Optimize Your Schedule</h4>
+            <h4 className="font-medium text-blue-900 mb-2">
+              Optimize Your Schedule
+            </h4>
             <p className="text-sm text-blue-700">
-              Your most productive hours are 9-11 AM. Consider scheduling important tasks during this time for maximum efficiency.
+              Your most productive hours are 9-11 AM. Consider scheduling
+              important tasks during this time for maximum efficiency.
             </p>
           </div>
-          
+
           <div className="p-4 rounded-lg bg-green-50 border border-green-200">
-            <h4 className="font-medium text-green-900 mb-2">Take More Breaks</h4>
+            <h4 className="font-medium text-green-900 mb-2">
+              Take More Breaks
+            </h4>
             <p className="text-sm text-green-700">
-              You've been focused for 2+ hours. A 10-minute break can boost your next session's productivity by 15%.
+              You've been focused for 2+ hours. A 10-minute break can boost your
+              next session's productivity by 15%.
             </p>
           </div>
-          
+
           <div className="p-4 rounded-lg bg-purple-50 border border-purple-200">
-            <h4 className="font-medium text-purple-900 mb-2">Meeting Efficiency</h4>
+            <h4 className="font-medium text-purple-900 mb-2">
+              Meeting Efficiency
+            </h4>
             <p className="text-sm text-purple-700">
-              Consider batching meetings on Tuesday and Thursday to create longer focus blocks on other days.
+              Consider batching meetings on Tuesday and Thursday to create
+              longer focus blocks on other days.
             </p>
           </div>
-          
+
           <div className="p-4 rounded-lg bg-orange-50 border border-orange-200">
-            <h4 className="font-medium text-orange-900 mb-2">Goal Adjustment</h4>
+            <h4 className="font-medium text-orange-900 mb-2">
+              Goal Adjustment
+            </h4>
             <p className="text-sm text-orange-700">
-              You're consistently exceeding your daily goals. Consider increasing them by 20% for optimal challenge.
+              You're consistently exceeding your daily goals. Consider
+              increasing them by 20% for optimal challenge.
             </p>
           </div>
         </div>

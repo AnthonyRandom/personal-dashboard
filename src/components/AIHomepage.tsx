@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { Search, Sparkles, Calendar, Cloud, Newspaper, Heart, TrendingUp, DollarSign } from "lucide-react";
+import {
+  Search,
+  Sparkles,
+  Calendar,
+  Cloud,
+  Newspaper,
+  Heart,
+  TrendingUp,
+  DollarSign,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -33,12 +42,16 @@ export function AIHomepage() {
             Ready when you are.
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Your AI-powered personal assistant is here to help with tasks, insights, and daily management.
+            Your AI-powered personal assistant is here to help with tasks,
+            insights, and daily management.
           </p>
         </div>
 
         {/* Search Interface */}
-        <div className="space-y-6 animate-slide-up" style={{ animationDelay: "0.2s" }}>
+        <div
+          className="space-y-6 animate-slide-up"
+          style={{ animationDelay: "0.2s" }}
+        >
           <form onSubmit={handleSearch} className="relative">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
@@ -76,7 +89,10 @@ export function AIHomepage() {
         </div>
 
         {/* Features Preview */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 animate-fade-in" style={{ animationDelay: "0.6s" }}>
+        <div
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 animate-fade-in"
+          style={{ animationDelay: "0.6s" }}
+        >
           {[
             { title: "Smart Tasks", desc: "AI-organized" },
             { title: "Weather", desc: "Real-time" },

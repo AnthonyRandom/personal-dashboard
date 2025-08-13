@@ -1,4 +1,12 @@
-import { Cloud, Sun, CloudRain, Wind, Droplets, Eye, Thermometer } from "lucide-react";
+import {
+  Cloud,
+  Sun,
+  CloudRain,
+  Wind,
+  Droplets,
+  Eye,
+  Thermometer,
+} from "lucide-react";
 
 export default function WeatherPage() {
   return (
@@ -22,7 +30,9 @@ export default function WeatherPage() {
           <div>
             <p className="text-6xl font-light">72°F</p>
             <p className="text-xl text-muted-foreground">Sunny</p>
-            <p className="text-sm text-muted-foreground mt-2">Feels like 75°F</p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Feels like 75°F
+            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -67,19 +77,54 @@ export default function WeatherPage() {
         <div className="space-y-3">
           {[
             { day: "Today", icon: Sun, high: 72, low: 58, condition: "Sunny" },
-            { day: "Tomorrow", icon: CloudRain, high: 68, low: 54, condition: "Light Rain" },
-            { day: "Thursday", icon: Cloud, high: 70, low: 56, condition: "Cloudy" },
+            {
+              day: "Tomorrow",
+              icon: CloudRain,
+              high: 68,
+              low: 54,
+              condition: "Light Rain",
+            },
+            {
+              day: "Thursday",
+              icon: Cloud,
+              high: 70,
+              low: 56,
+              condition: "Cloudy",
+            },
             { day: "Friday", icon: Sun, high: 75, low: 60, condition: "Sunny" },
-            { day: "Saturday", icon: CloudRain, high: 65, low: 52, condition: "Showers" },
-            { day: "Sunday", icon: Sun, high: 73, low: 59, condition: "Partly Sunny" },
-            { day: "Monday", icon: Cloud, high: 69, low: 55, condition: "Overcast" },
+            {
+              day: "Saturday",
+              icon: CloudRain,
+              high: 65,
+              low: 52,
+              condition: "Showers",
+            },
+            {
+              day: "Sunday",
+              icon: Sun,
+              high: 73,
+              low: 59,
+              condition: "Partly Sunny",
+            },
+            {
+              day: "Monday",
+              icon: Cloud,
+              high: 69,
+              low: 55,
+              condition: "Overcast",
+            },
           ].map((forecast, index) => (
-            <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-accent/50 transition-colors">
+            <div
+              key={index}
+              className="flex items-center justify-between p-3 rounded-lg hover:bg-accent/50 transition-colors"
+            >
               <div className="flex items-center gap-4">
                 <forecast.icon className="w-6 h-6 text-muted-foreground" />
                 <div>
                   <p className="font-medium">{forecast.day}</p>
-                  <p className="text-sm text-muted-foreground">{forecast.condition}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {forecast.condition}
+                  </p>
                 </div>
               </div>
               <div className="text-right">
@@ -103,8 +148,13 @@ export default function WeatherPage() {
             { time: "4 PM", temp: 74, icon: Cloud },
             { time: "5 PM", temp: 72, icon: CloudRain },
           ].map((hour, index) => (
-            <div key={index} className="flex flex-col items-center min-w-0 space-y-2 p-3 rounded-lg bg-muted/50">
-              <p className="text-sm font-medium whitespace-nowrap">{hour.time}</p>
+            <div
+              key={index}
+              className="flex flex-col items-center min-w-0 space-y-2 p-3 rounded-lg bg-muted/50"
+            >
+              <p className="text-sm font-medium whitespace-nowrap">
+                {hour.time}
+              </p>
               <hour.icon className="w-6 h-6 text-muted-foreground" />
               <p className="text-sm font-semibold">{hour.temp}°</p>
             </div>

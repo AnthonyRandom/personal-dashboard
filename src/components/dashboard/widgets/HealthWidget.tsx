@@ -7,7 +7,7 @@ export function HealthWidget() {
         <Heart className="w-5 h-5 text-primary" />
         <h3 className="font-semibold">Health</h3>
       </div>
-      
+
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -19,11 +19,14 @@ export function HealthWidget() {
             <p className="text-xs text-muted-foreground">of 10,000</p>
           </div>
         </div>
-        
+
         <div className="w-full bg-muted rounded-full h-2">
-          <div className="bg-primary h-2 rounded-full" style={{ width: '85%' }}></div>
+          <div
+            className="bg-primary h-2 rounded-full"
+            style={{ width: "85%" }}
+          ></div>
         </div>
-        
+
         <div className="grid grid-cols-2 gap-4 text-center">
           <div>
             <p className="text-lg font-semibold">7h 23m</p>

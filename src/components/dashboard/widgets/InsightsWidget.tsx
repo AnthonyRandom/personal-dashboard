@@ -7,7 +7,7 @@ export function InsightsWidget() {
         <Sparkles className="w-5 h-5 text-primary" />
         <h3 className="font-semibold">AI Insights</h3>
       </div>
-      
+
       <div className="space-y-3">
         <div className="flex items-start gap-3">
           <Brain className="w-5 h-5 text-primary mt-0.5" />
@@ -18,7 +18,7 @@ export function InsightsWidget() {
             </p>
           </div>
         </div>
-        
+
         <div className="pt-2 border-t border-border">
           <p className="text-xs text-muted-foreground">
             AI suggests scheduling important tasks during morning hours

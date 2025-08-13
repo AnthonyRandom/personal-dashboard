@@ -13,10 +13,13 @@ export function CalendarWidget() {
         <Calendar className="w-5 h-5 text-primary" />
         <h3 className="font-semibold">Today</h3>
       </div>
-      
+
       <div className="space-y-3">
         {events.map((event, index) => (
-          <div key={index} className="flex items-center gap-3 group hover-subtle rounded-lg p-2 -m-2">
+          <div
+            key={index}
+            className="flex items-center gap-3 group hover-subtle rounded-lg p-2 -m-2"
+          >
             <div className="w-2 h-2 bg-primary rounded-full"></div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{event.title}</p>
@@ -27,7 +30,7 @@ export function CalendarWidget() {
             </div>
           </div>
         ))}
-        
+
         <div className="pt-2 border-t border-border">
           <p className="text-xs text-muted-foreground">3 events today</p>
         </div>

@@ -7,7 +7,7 @@ export function WeatherWidget() {
         <Sun className="w-5 h-5 text-primary" />
         <h3 className="font-semibold">Weather</h3>
       </div>
-      
+
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
@@ -16,7 +16,7 @@ export function WeatherWidget() {
           </div>
           <Sun className="w-8 h-8 text-primary" />
         </div>
-        
+
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="space-y-1">
             <CloudRain className="w-4 h-4 mx-auto text-muted-foreground" />

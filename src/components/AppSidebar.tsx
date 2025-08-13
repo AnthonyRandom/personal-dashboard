@@ -54,8 +54,8 @@ export function AppSidebar() {
 
   const isActive = (path: string) => currentPath === path;
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
-    isActive 
-      ? "bg-primary text-primary-foreground font-medium" 
+    isActive
+      ? "bg-primary text-primary-foreground font-medium"
       : "hover:bg-accent hover:text-accent-foreground";
 
   const toggleTheme = () => {
@@ -76,7 +76,9 @@ export function AppSidebar() {
             </div>
             <div>
               <h1 className="text-lg font-semibold">AI Dashboard</h1>
-              <p className="text-xs text-muted-foreground">Personal Assistant</p>
+              <p className="text-xs text-muted-foreground">
+                Personal Assistant
+              </p>
             </div>
           </div>
         )}
@@ -97,12 +99,14 @@ export function AppSidebar() {
               {navigationItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="w-full">
-                    <NavLink 
-                      to={item.url} 
-                      end 
+                    <NavLink
+                      to={item.url}
+                      end
                       className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 ${getNavCls({ isActive: isActive(item.url) })}`}
                     >
-                      <item.icon className={`h-4 w-4 ${collapsed ? "" : "mr-3"}`} />
+                      <item.icon
+                        className={`h-4 w-4 ${collapsed ? "" : "mr-3"}`}
+                      />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>

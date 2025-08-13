@@ -15,12 +15,51 @@ interface Task {
 }
 
 const initialTasks: Task[] = [
-  { id: 1, text: "Review quarterly report", completed: false, priority: "high", dueDate: "2024-01-20", category: "Work" },
-  { id: 2, text: "Call dentist for appointment", completed: true, priority: "medium", category: "Personal" },
-  { id: 3, text: "Finish project presentation", completed: false, priority: "high", dueDate: "2024-01-18", category: "Work" },
-  { id: 4, text: "Buy groceries", completed: false, priority: "low", category: "Personal" },
-  { id: 5, text: "Plan weekend trip", completed: false, priority: "medium", dueDate: "2024-01-25", category: "Personal" },
-  { id: 6, text: "Update portfolio", completed: false, priority: "medium", category: "Work" },
+  {
+    id: 1,
+    text: "Review quarterly report",
+    completed: false,
+    priority: "high",
+    dueDate: "2024-01-20",
+    category: "Work",
+  },
+  {
+    id: 2,
+    text: "Call dentist for appointment",
+    completed: true,
+    priority: "medium",
+    category: "Personal",
+  },
+  {
+    id: 3,
+    text: "Finish project presentation",
+    completed: false,
+    priority: "high",
+    dueDate: "2024-01-18",
+    category: "Work",
+  },
+  {
+    id: 4,
+    text: "Buy groceries",
+    completed: false,
+    priority: "low",
+    category: "Personal",
+  },
+  {
+    id: 5,
+    text: "Plan weekend trip",
+    completed: false,
+    priority: "medium",
+    dueDate: "2024-01-25",
+    category: "Personal",
+  },
+  {
+    id: 6,
+    text: "Update portfolio",
+    completed: false,
+    priority: "medium",
+    category: "Work",
+  },
 ];
 
 export default function TasksPage() {
@@ -29,27 +68,29 @@ export default function TasksPage() {
   const [filter, setFilter] = useState<"all" | "pending" | "completed">("all");
 
   const toggleTask = (id: number) => {
-    setTasks(tasks.map(task => 
-      task.id === id ? { ...task, completed: !task.completed } : task
-    ));
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
   };
 
   const addTask = (e: React.FormEvent) => {
     e.preventDefault();
     if (newTask.trim()) {
       const task: Task = {
-        id: Math.max(...tasks.map(t => t.id)) + 1,
+        id: Math.max(...tasks.map((t) => t.id)) + 1,
         text: newTask.trim(),
         completed: false,
         priority: "medium",
-        category: "Personal"
+        category: "Personal",
       };
       setTasks([task, ...tasks]);
       setNewTask("");
     }
   };
 
-  const filteredTasks = tasks.filter(task => {
+  const filteredTasks = tasks.filter((task) => {
     if (filter === "pending") return !task.completed;
     if (filter === "completed") return task.completed;
     return true;
@@ -57,10 +98,14 @@ export default function TasksPage() {
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case "high": return "bg-red-100 text-red-800 border-red-200";
-      case "medium": return "bg-yellow-100 text-yellow-800 border-yellow-200";
-      case "low": return "bg-green-100 text-green-800 border-green-200";
-      default: return "bg-gray-100 text-gray-800 border-gray-200";
+      case "high":
+        return "bg-red-100 text-red-800 border-red-200";
+      case "medium":
+        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "low":
+        return "bg-green-100 text-green-800 border-green-200";
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
 
@@ -69,7 +114,9 @@ export default function TasksPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Tasks</h1>
-          <p className="text-muted-foreground">Manage your daily tasks and projects</p>
+          <p className="text-muted-foreground">
+            Manage your daily tasks and projects
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" size="icon">
@@ -121,21 +168,26 @@ export default function TasksPage() {
                 onCheckedChange={() => toggleTask(task.id)}
                 className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
-              
+
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className={`text-sm font-medium transition-all ${
-                    task.completed 
-                      ? "line-through text-muted-foreground" 
-                      : "text-foreground group-hover:text-primary"
-                  }`}>
+                  <span
+                    className={`text-sm font-medium transition-all ${
+                      task.completed
+                        ? "line-through text-muted-foreground"
+                        : "text-foreground group-hover:text-primary"
+                    }`}
+                  >
                     {task.text}
                   </span>
-                  <Badge variant="outline" className={getPriorityColor(task.priority)}>
+                  <Badge
+                    variant="outline"
+                    className={getPriorityColor(task.priority)}
+                  >
                     {task.priority}
                   </Badge>
                 </div>
-                
+
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <span>{task.category}</span>
                   {task.dueDate && (
@@ -159,7 +211,9 @@ export default function TasksPage() {
           <CheckSquare className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
           <p className="text-lg font-medium">No tasks found</p>
           <p className="text-muted-foreground">
-            {filter === "completed" ? "No completed tasks yet" : "Add your first task to get started"}
+            {filter === "completed"
+              ? "No completed tasks yet"
+              : "Add your first task to get started"}
           </p>
         </div>
       )}

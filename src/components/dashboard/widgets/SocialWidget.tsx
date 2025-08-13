@@ -7,7 +7,7 @@ export function SocialWidget() {
         <Share2 className="w-5 h-5 text-primary" />
         <h3 className="font-semibold">Social Highlights</h3>
       </div>
-      
+
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -16,7 +16,7 @@ export function SocialWidget() {
           </div>
           <span className="text-sm font-medium">3 new</span>
         </div>
-        
+
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Heart className="w-4 h-4 text-muted-foreground" />

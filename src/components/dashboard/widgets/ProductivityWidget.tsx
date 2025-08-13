@@ -7,7 +7,7 @@ export function ProductivityWidget() {
         <TrendingUp className="w-5 h-5 text-primary" />
         <h3 className="font-semibold">Productivity Insights</h3>
       </div>
-      
+
       <div className="grid grid-cols-3 gap-4">
         <div className="text-center space-y-2">
           <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
@@ -18,7 +18,7 @@ export function ProductivityWidget() {
             <p className="text-xs text-muted-foreground">Focus Time</p>
           </div>
         </div>
-        
+
         <div className="text-center space-y-2">
           <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
             <Target className="w-6 h-6 text-primary" />
@@ -28,7 +28,7 @@ export function ProductivityWidget() {
             <p className="text-xs text-muted-foreground">Goals Met</p>
           </div>
         </div>
-        
+
         <div className="text-center space-y-2">
           <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto">
             <TrendingUp className="w-6 h-6 text-primary" />
@@ -39,7 +39,7 @@ export function ProductivityWidget() {
           </div>
         </div>
       </div>
-      
+
       <div className="mt-4 pt-4 border-t border-border">
         <p className="text-sm text-muted-foreground">
           You're 15% more productive than last week! Keep it up! 🚀

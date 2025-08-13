@@ -1,23 +1,23 @@
 import { Newspaper, ExternalLink } from "lucide-react";
 
 const articles = [
-  { 
-    title: "AI Breakthrough in Personal Productivity Tools", 
-    source: "Tech Daily", 
+  {
+    title: "AI Breakthrough in Personal Productivity Tools",
+    source: "Tech Daily",
     time: "2h ago",
-    category: "Technology"
+    category: "Technology",
   },
-  { 
-    title: "Market Update: Tech Stocks Rally Continues", 
-    source: "Financial Times", 
+  {
+    title: "Market Update: Tech Stocks Rally Continues",
+    source: "Financial Times",
     time: "4h ago",
-    category: "Finance"
+    category: "Finance",
   },
-  { 
-    title: "New Study Shows Benefits of Mindful Morning Routines", 
-    source: "Health Journal", 
+  {
+    title: "New Study Shows Benefits of Mindful Morning Routines",
+    source: "Health Journal",
     time: "6h ago",
-    category: "Health"
+    category: "Health",
   },
 ];
 
@@ -28,10 +28,13 @@ export function NewsWidget() {
         <Newspaper className="w-5 h-5 text-primary" />
         <h3 className="font-semibold">Personalized News</h3>
       </div>
-      
+
       <div className="space-y-4">
         {articles.map((article, index) => (
-          <div key={index} className="group hover-subtle rounded-lg p-2 -m-2 cursor-pointer">
+          <div
+            key={index}
+            className="group hover-subtle rounded-lg p-2 -m-2 cursor-pointer"
+          >
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1 min-w-0">
                 <h4 className="text-sm font-medium line-clamp-2 group-hover:text-primary transition-colors">

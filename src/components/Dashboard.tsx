@@ -10,13 +10,13 @@ export function Dashboard() {
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-background">
         <AppSidebar />
-        
+
         <div className="flex-1 flex flex-col">
           {/* Header */}
           <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="flex h-16 items-center px-6 gap-4">
               <SidebarTrigger className="hover:bg-accent hover:text-accent-foreground" />
-              
+
               <div className="flex-1 flex items-center justify-between">
                 <div className="relative max-w-md flex-1">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -25,7 +25,7 @@ export function Dashboard() {
                     className="pl-10 bg-muted/50 border-0 focus-visible:bg-background"
                   />
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   <Button variant="ghost" size="icon" className="relative">
                     <Bell className="w-4 h-4" />

@@ -7,13 +7,13 @@ export function FinanceWidget() {
         <DollarSign className="w-5 h-5 text-primary" />
         <h3 className="font-semibold">Finance</h3>
       </div>
-      
+
       <div className="space-y-4">
         <div>
           <p className="text-2xl font-bold">$4,247.83</p>
           <p className="text-sm text-muted-foreground">Total Balance</p>
         </div>
-        
+
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-sm">This Month</span>
@@ -22,7 +22,7 @@ export function FinanceWidget() {
               <span className="text-xs font-medium">+$124.50</span>
             </div>
           </div>
-          
+
           <div className="flex items-center justify-between">
             <span className="text-sm">Expenses</span>
             <div className="flex items-center gap-1 text-red-600">
@@ -31,7 +31,7 @@ export function FinanceWidget() {
             </div>
           </div>
         </div>
-        
+
         <div className="pt-2 border-t border-border">
           <p className="text-xs text-muted-foreground">
             You're saving 12% more than last month
