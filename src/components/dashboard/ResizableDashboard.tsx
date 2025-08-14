@@ -39,19 +39,61 @@ interface WidgetWrapperProps {
 
 function WidgetWrapper({ children, title, widgetId, onRemove, staggerDelay }: WidgetWrapperProps) {
   const [showRemoveDialog, setShowRemoveDialog] = useState(false);
+  const [isResizing, setIsResizing] = useState(false);
+  const [isHoveringCorner, setIsHoveringCorner] = useState(false);
 
   const handleRemove = () => {
     onRemove(widgetId);
     setShowRemoveDialog(false);
   };
 
+  const handleResizeStart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsResizing(true);
+    
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const widgetElement = (e.target as HTMLElement).closest('.widget-container') as HTMLElement;
+    const panelElement = widgetElement?.closest('[data-panel]') as HTMLElement;
+    
+    if (!panelElement) return;
+
+    const startWidth = panelElement.offsetWidth;
+    const startHeight = panelElement.offsetHeight;
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      const deltaX = moveEvent.clientX - startX;
+      const deltaY = moveEvent.clientY - startY;
+      
+      const newWidth = Math.max(200, startWidth + deltaX);
+      const newHeight = Math.max(200, startHeight + deltaY);
+      
+      panelElement.style.minWidth = `${newWidth}px`;
+      panelElement.style.height = `${newHeight}px`;
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
   return (
     <>
       <div 
-        className="relative group animate-scale-in h-full"
+        className={cn(
+          "relative group animate-scale-in h-full widget-container transition-all duration-300 ease-out",
+          isHoveringCorner && "rounded-br-xl shadow-lg",
+          isResizing && "select-none cursor-se-resize"
+        )}
         style={staggerDelay ? { "--stagger-delay": staggerDelay } as React.CSSProperties : undefined}
       >
-        {/* Position button outside of any clipping containers */}
+        {/* Remove button - positioned outside of any clipping containers */}
         <div className="absolute -top-3 -right-3 z-30">
           <Button
             variant="ghost"
@@ -63,6 +105,24 @@ function WidgetWrapper({ children, title, widgetId, onRemove, staggerDelay }: Wi
             <X className="w-3 h-3" />
           </Button>
         </div>
+        
+        {/* Resize corner area - invisible but interactive */}
+        <div 
+          className="absolute bottom-0 right-0 w-6 h-6 cursor-se-resize z-20"
+          onMouseDown={handleResizeStart}
+          onMouseEnter={() => setIsHoveringCorner(true)}
+          onMouseLeave={() => setIsHoveringCorner(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              // For keyboard users, we could implement arrow key resizing
+            }
+          }}
+          aria-label={`Resize ${title} widget by dragging this corner`}
+          role="button"
+          tabIndex={0}
+        />
+        
         <div className="h-full">{children}</div>
       </div>
       
@@ -134,7 +194,7 @@ export function ResizableDashboard() {
               <div key={widget.id} className="contents">
                 <Panel
                   defaultSize={25 * widget.position.colSpan}
-                  minSize={15}
+                  minSize={Math.max(25 * widget.position.colSpan, 25)}
                   className={cn(
                     "relative",
                     "animate-scale-in"
@@ -150,7 +210,11 @@ export function ResizableDashboard() {
                     onRemove={removeWidget}
                     staggerDelay={rowIndex * row.length + colIndex + 1}
                   >
-                    {WidgetComponent && <WidgetComponent />}
+                    {WidgetComponent && (
+                      <div style={{ height: '100%', width: '100%' }}>
+                        <WidgetComponent />
+                      </div>
+                    )}
                   </WidgetWrapper>
                 </Panel>
                 

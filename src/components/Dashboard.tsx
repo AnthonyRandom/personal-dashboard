@@ -4,11 +4,10 @@ import { AppSidebar } from "./AppSidebar";
 import { Search, Bell, Plus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DashboardOverview } from "./dashboard/DashboardOverview";
-import { AddWidgetModal } from "./dashboard/AddWidgetModal";
+import { AuthButton } from "./AuthButton";
 
 interface DashboardProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export function Dashboard({ children }: DashboardProps) {
@@ -78,7 +77,7 @@ export function Dashboard({ children }: DashboardProps) {
                       aria-hidden="true"
                     ></span>
                   </Button>
-                  <AddWidgetModal />
+                  <AuthButton />
                 </div>
               </div>
             </div>
@@ -86,7 +85,7 @@ export function Dashboard({ children }: DashboardProps) {
 
           {/* Main Content */}
           <main className="flex-1 p-6">
-            {children || <DashboardOverview />}
+            {children}
           </main>
         </div>
       </div>

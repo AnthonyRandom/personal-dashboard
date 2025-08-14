@@ -225,22 +225,18 @@
     @apply focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 
-  /* Ensure widget remove buttons are never clipped */
-  .dashboard-container,
-  .dashboard-container * {
-    overflow: visible !important;
-  }
+  /* Scoped overflow controls are handled per-component to avoid stacking/overlap */
 
   /* React Grid Layout custom styles */
   .react-grid-layout {
     position: relative;
-    overflow: visible !important;
+    overflow: hidden;
   }
   
   .react-grid-item {
     transition: all 200ms ease;
     transition-property: left, top, width, height;
-    overflow: visible !important;
+    overflow: hidden;
   }
   
   .react-grid-item.cssTransforms {
@@ -248,45 +244,160 @@
   }
   
   .react-grid-item > .react-resizable-handle {
+    display: none !important;
+    visibility: hidden !important;
     position: absolute;
-    width: 16px;
-    height: 16px;
-    bottom: 2px;
-    right: 2px;
-    background-color: hsl(var(--muted));
-    border: 1px solid hsl(var(--border));
-    border-radius: 3px;
-    cursor: se-resize;
-    transition: all 0.2s ease;
-    z-index: 10;
+    width: 0 !important;
+    height: 0 !important;
+    bottom: 0;
+    right: 0;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    cursor: default !important;
+    z-index: -1 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    content: none !important;
+  }
+
+  /* Hide any UA default resize affordance on WebKit/Blink */
+  .react-grid-item > .react-resizable-handle::-webkit-resizer {
+    display: none !important;
+  }
+
+  /* Remove any default triangular arrow or assets from react-resizable */
+  .react-resizable-handle,
+  .react-resizable-handle::before,
+  .react-resizable-handle::after {
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    mask: none !important;
+    -webkit-mask: none !important;
+    opacity: 0 !important;
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
   
-  .react-grid-item > .react-resizable-handle:hover {
-    background-color: hsl(var(--accent));
-    border-color: hsl(var(--primary));
-    transform: scale(1.1);
+  /* Hide browser default resize cursors and handles completely */
+  .react-resizable-handle::-webkit-resizer { 
+    display: none !important; 
+    visibility: hidden !important;
   }
   
-  .react-grid-item > .react-resizable-handle::after {
-    content: "";
-    position: absolute;
-    right: 2px;
-    bottom: 2px;
-    width: 4px;
-    height: 4px;
-    border-right: 2px solid hsl(var(--muted-foreground));
-    border-bottom: 2px solid hsl(var(--muted-foreground));
-    opacity: 0.7;
+  /* Additional rules to ensure no resize affordances appear */
+  .react-grid-item .react-resizable-handle {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    content: none !important;
   }
   
-  .react-grid-item.react-grid-placeholder {
-    background-color: hsl(var(--primary) / 0.1);
-    border: 2px dashed hsl(var(--primary) / 0.4);
-    border-radius: 12px !important;
-    opacity: 0.7;
-    transition-duration: 200ms;
-    z-index: 2;
+  /* Target the exact selector that controls the corner arrow */
+  .react-grid-item > .react-resizable-handle.react-resizable-handle-se {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+    cursor: default !important;
+  }
+  
+  /* Target all specific resize handle variants */
+  .react-resizable-handle-se,
+  .react-resizable-handle-s,
+  .react-resizable-handle-e,
+  .react-resizable-handle-n,
+  .react-resizable-handle-w,
+  .react-resizable-handle-ne,
+  .react-resizable-handle-nw,
+  .react-resizable-handle-sw,
+  span.react-resizable-handle,
+  div.react-resizable-handle {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    content: none !important;
+    background: none !important;
+    background-image: none !important;
+    border: none !important;
+  }
+  
+  /* Hide all possible resize handle pseudo-elements */
+  .react-grid-item .react-resizable-handle:before,
+  .react-grid-item .react-resizable-handle:after,
+  .react-resizable-handle-se:before,
+  .react-resizable-handle-se:after {
+    display: none !important;
+    visibility: hidden !important;
+    content: none !important;
+  }
+
+  /* Invisible full-edge resize handles for better usability */
+  .react-grid-item > .react-resizable-handle-e {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 8px;
+    height: auto;
+    background: none !important;
+    background-image: none !important;
+    cursor: e-resize;
+    opacity: 0 !important;
+  }
+
+  .react-grid-item > .react-resizable-handle-s {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 8px;
+    width: auto;
+    background: none !important;
+    background-image: none !important;
+    cursor: s-resize;
+    opacity: 0 !important;
+  }
+
+  /* Ensure resized widget appears above neighbors during interaction */
+  .react-grid-item.react-resizable-resizing {
+    z-index: 1000;
+  }
+  
+  /* Hide all possible placeholder variations - nuclear approach */
+  .react-grid-placeholder,
+  .react-grid-item.react-grid-placeholder,
+  .react-grid-layout .react-grid-placeholder,
+  div.react-grid-placeholder,
+  .layout .react-grid-placeholder,
+  [class*="react-grid-placeholder"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+    z-index: -1 !important;
     user-select: none;
+    pointer-events: none !important;
   }
   
   .drag-handle {
@@ -301,7 +412,7 @@
   /* Ensure widgets are fully visible during drag */
   .react-grid-item.react-draggable-dragging {
     z-index: 1000;
-    overflow: visible !important;
+    overflow: hidden;
   }
   
   .widget-item {
@@ -316,9 +427,5 @@
     min-height: 100%;
   }
 
-  /* Fix for widget content padding to accommodate resize handle */
-  .widget-item > div > div:last-child {
-    padding-bottom: 20px;
-    padding-right: 20px;
-  }
+  /* Removed extra padding previously added for resize handle to match grid sizing precisely */
 }

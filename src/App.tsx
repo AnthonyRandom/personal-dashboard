@@ -15,14 +15,19 @@ import JournalPage from "./pages/JournalPage";
 import InsightsPage from "./pages/InsightsPage";
 import SocialPage from "./pages/SocialPage";
 import NotFound from "./pages/NotFound";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 import { Dashboard } from "./components/Dashboard";
 import { DashboardOverview } from "./components/dashboard/DashboardOverview";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
 // Create a wrapper component for dashboard pages
 const DashboardPageWrapper = ({ children }: { children: React.ReactNode }) => (
-  <Dashboard>{children}</Dashboard>
+  <ProtectedRoute>
+    <Dashboard>{children}</Dashboard>
+  </ProtectedRoute>
 );
 
 const App = () => (
@@ -33,7 +38,9 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/dashboard" element={<DashboardPageWrapper><DashboardOverview /></DashboardPageWrapper>} />
           <Route path="/tasks" element={<DashboardPageWrapper><TasksPage /></DashboardPageWrapper>} />
           <Route path="/weather" element={<DashboardPageWrapper><WeatherPage /></DashboardPageWrapper>} />
           <Route path="/calendar" element={<DashboardPageWrapper><CalendarPage /></DashboardPageWrapper>} />

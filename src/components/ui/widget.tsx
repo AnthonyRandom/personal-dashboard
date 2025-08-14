@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const widgetVariants = cva(
-  "bg-card border border-border rounded-xl transition-all duration-300 ease-out",
+  "bg-card border border-border rounded-xl transition-all duration-300 ease-out w-full h-full flex flex-col overflow-hidden",
   {
     variants: {
       variant: {
@@ -90,7 +90,7 @@ const Widget = forwardRef<HTMLDivElement, WidgetProps>(
           </div>
         )}
         
-        <div className="space-y-3">{children}</div>
+        <div className="space-y-3 flex-1 min-h-0 overflow-hidden">{children}</div>
         
         {footer && (
           <div className="pt-3 mt-3 border-t border-border">

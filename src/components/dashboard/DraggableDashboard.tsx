@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 
 // Import required CSS for react-grid-layout
 import "react-grid-layout/css/styles.css";
-import "react-resizable/css/styles.css";
+// Removed default react-resizable styles to avoid showing the default corner arrow
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -102,8 +102,8 @@ export function DraggableDashboard() {
       y: widget.position.row,
       w: widget.position.colSpan,
       h: widget.position.rowSpan,
-      minW: 1,
-      minH: 1,
+      minW: Math.max(1, widget.position.colSpan),
+      minH: Math.max(1, widget.position.rowSpan),
       maxW: 4,
       maxH: 3,
     }));
@@ -156,11 +156,14 @@ export function DraggableDashboard() {
         margin={[16, 16]}
         containerPadding={[0, 0]}
         isDraggable={true}
-        isResizable={true}
+        isResizable={false}
         draggableHandle=".drag-handle"
-        preventCollision={true}
-        compactType="vertical"
+        preventCollision={false}
+        compactType="horizontal"
+        autoSize={true}
         useCSSTransforms={true}
+        allowOverlap={false}
+        isBounded={false}
         style={{ overflow: 'visible' }}
       >
         {enabledWidgets.map((widget, index) => {
@@ -175,8 +178,10 @@ export function DraggableDashboard() {
               )}
               style={{ 
                 "--stagger-delay": index + 1,
-                overflow: 'visible',
-                position: 'relative'
+                overflow: 'hidden',
+                position: 'relative',
+                height: '100%',
+                width: '100%'
               } as React.CSSProperties}
             >
               <WidgetWrapper
@@ -185,7 +190,11 @@ export function DraggableDashboard() {
                 onRemove={removeWidget}
                 staggerDelay={index + 1}
               >
-                {WidgetComponent && <WidgetComponent />}
+                {WidgetComponent && (
+                  <div style={{ height: '100%', width: '100%' }}>
+                    <WidgetComponent />
+                  </div>
+                )}
               </WidgetWrapper>
             </div>
           );
