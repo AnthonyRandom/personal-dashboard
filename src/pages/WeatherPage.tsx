@@ -1,14 +1,150 @@
-import {
-  Cloud,
-  Sun,
-  CloudRain,
-  Wind,
-  Droplets,
-  Eye,
-  Thermometer,
-} from "lucide-react";
+import { useState } from "react";
+import { useWeatherData } from "@/hooks/useWeatherData";
+import { WeatherCard } from "@/components/weather/WeatherCard";
+import { ForecastList } from "@/components/weather/ForecastList";
+import { HourlyForecast } from "@/components/weather/HourlyForecast";
+import { LocationForm } from "@/components/weather/LocationForm";
+import { GeolocationPrompt } from "@/components/weather/GeolocationPrompt";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2, RefreshCw, AlertCircle } from "lucide-react";
 
 export default function WeatherPage() {
+  const [showGeolocationPrompt, setShowGeolocationPrompt] = useState(true);
+  
+  const {
+    currentWeather,
+    forecast,
+    hourlyForecast,
+    userLocation,
+    isLoading,
+    hasError,
+    weatherError,
+    retryAll,
+  } = useWeatherData();
+
+  // Check if we're rate limited or have location issues
+  const isRateLimit = weatherError?.message?.includes('429') || 
+                     weatherError?.message?.includes('rate limit') ||
+                     weatherError?.message?.includes('Too Many Calls');
+  
+  const isLocationError = weatherError?.message?.includes('Invalid location data');
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Weather</h1>
+          <p className="text-muted-foreground">Current conditions and forecast</p>
+        </div>
+
+        <div className="flex items-center justify-center py-12">
+          <div className="flex flex-col items-center space-y-4">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <p className="text-sm text-muted-foreground">Loading weather data...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (hasError) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Weather</h1>
+          <p className="text-muted-foreground">Current conditions and forecast</p>
+        </div>
+
+        <Alert variant={isRateLimit ? "default" : "destructive"} className="animate-slide-up">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            {isRateLimit ? (
+              <>
+                Weather API rate limit reached. Please wait a few minutes before refreshing. 
+                The limit resets every hour.
+              </>
+            ) : isLocationError ? (
+              "Please set a valid location to view weather data."
+            ) : (
+              "Failed to load weather data. Please check your location settings and try again."
+            )}
+          </AlertDescription>
+        </Alert>
+
+        {!isRateLimit && !isLocationError && (
+          <div className="flex items-center justify-center py-12">
+            <div className="flex flex-col items-center space-y-4">
+              <Button onClick={retryAll} className="hover:scale-[1.02] transition-transform">
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Retry
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {isLocationError && <LocationForm />}
+
+        {isRateLimit && (
+          <div className="text-center py-12">
+            <p className="text-sm text-muted-foreground">
+              API usage will reset at the top of the next hour. <br />
+              Weather data will automatically refresh when available.
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  if (!userLocation) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Weather</h1>
+          <p className="text-muted-foreground">Set your location to view weather data</p>
+        </div>
+
+        {/* Show geolocation prompt first - but not if rate limited */}
+        {showGeolocationPrompt && !isRateLimit && (
+          <GeolocationPrompt onDismiss={() => setShowGeolocationPrompt(false)} />
+        )}
+
+        {/* Show rate limit warning if applicable */}
+        {isRateLimit && (
+          <Alert variant="default" className="animate-slide-up">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              Weather API rate limit reached. Please wait for the limit to reset before setting a new location.
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {!isRateLimit && <LocationForm />}
+      </div>
+    );
+  }
+
+  if (!currentWeather || !forecast || !hourlyForecast) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Weather</h1>
+          <p className="text-muted-foreground">Current conditions and forecast</p>
+        </div>
+
+        <Alert>
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>
+            Weather data is not available. Please try updating your location.
+          </AlertDescription>
+        </Alert>
+
+        <LocationForm />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -16,151 +152,29 @@ export default function WeatherPage() {
         <p className="text-muted-foreground">Current conditions and forecast</p>
       </div>
 
-      {/* Current Weather */}
-      <div className="dashboard-widget">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-xl font-semibold">San Francisco, CA</h2>
-            <p className="text-muted-foreground">Today, January 15</p>
-          </div>
-          <Sun className="w-12 h-12 text-yellow-500" />
-        </div>
+      {/* Weather Cards - 3 Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Current Weather */}
+        <WeatherCard 
+          weather={currentWeather} 
+          location={(() => {
+            const locationData: { city?: string; state?: string; country?: string } = {};
+            if (userLocation.city) locationData.city = userLocation.city;
+            if (userLocation.state) locationData.state = userLocation.state;
+            if (userLocation.country) locationData.country = userLocation.country;
+            return locationData;
+          })()}
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <p className="text-6xl font-light">72°F</p>
-            <p className="text-xl text-muted-foreground">Sunny</p>
-            <p className="text-sm text-muted-foreground mt-2">
-              Feels like 75°F
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Wind className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm">Wind</span>
-              </div>
-              <p className="text-lg font-semibold">8 mph</p>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Droplets className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm">Humidity</span>
-              </div>
-              <p className="text-lg font-semibold">65%</p>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm">Visibility</span>
-              </div>
-              <p className="text-lg font-semibold">10 mi</p>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Thermometer className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm">UV Index</span>
-              </div>
-              <p className="text-lg font-semibold">3</p>
-            </div>
-          </div>
-        </div>
+        {/* 5-Day Forecast */}
+        <ForecastList forecast={forecast} />
+        
+        {/* Hourly Forecast */}
+        <HourlyForecast hourlyForecast={hourlyForecast} />
       </div>
 
-      {/* 7-Day Forecast */}
-      <div className="dashboard-widget">
-        <h3 className="text-lg font-semibold mb-4">7-Day Forecast</h3>
-        <div className="space-y-3">
-          {[
-            { day: "Today", icon: Sun, high: 72, low: 58, condition: "Sunny" },
-            {
-              day: "Tomorrow",
-              icon: CloudRain,
-              high: 68,
-              low: 54,
-              condition: "Light Rain",
-            },
-            {
-              day: "Thursday",
-              icon: Cloud,
-              high: 70,
-              low: 56,
-              condition: "Cloudy",
-            },
-            { day: "Friday", icon: Sun, high: 75, low: 60, condition: "Sunny" },
-            {
-              day: "Saturday",
-              icon: CloudRain,
-              high: 65,
-              low: 52,
-              condition: "Showers",
-            },
-            {
-              day: "Sunday",
-              icon: Sun,
-              high: 73,
-              low: 59,
-              condition: "Partly Sunny",
-            },
-            {
-              day: "Monday",
-              icon: Cloud,
-              high: 69,
-              low: 55,
-              condition: "Overcast",
-            },
-          ].map((forecast, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-between p-3 rounded-lg hover:bg-accent/50 transition-colors"
-            >
-              <div className="flex items-center gap-4">
-                <forecast.icon className="w-6 h-6 text-muted-foreground" />
-                <div>
-                  <p className="font-medium">{forecast.day}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {forecast.condition}
-                  </p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="font-semibold">{forecast.high}°</p>
-                <p className="text-sm text-muted-foreground">{forecast.low}°</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Hourly Forecast */}
-      <div className="dashboard-widget">
-        <h3 className="text-lg font-semibold mb-4">Hourly Forecast</h3>
-        <div className="flex gap-4 overflow-x-auto pb-2">
-          {[
-            { time: "Now", temp: 72, icon: Sun },
-            { time: "1 PM", temp: 74, icon: Sun },
-            { time: "2 PM", temp: 75, icon: Sun },
-            { time: "3 PM", temp: 76, icon: Cloud },
-            { time: "4 PM", temp: 74, icon: Cloud },
-            { time: "5 PM", temp: 72, icon: CloudRain },
-          ].map((hour, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center min-w-0 space-y-2 p-3 rounded-lg bg-muted/50"
-            >
-              <p className="text-sm font-medium whitespace-nowrap">
-                {hour.time}
-              </p>
-              <hour.icon className="w-6 h-6 text-muted-foreground" />
-              <p className="text-sm font-semibold">{hour.temp}°</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Location Settings */}
+      <LocationForm />
     </div>
   );
 }

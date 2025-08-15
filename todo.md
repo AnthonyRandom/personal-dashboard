@@ -40,39 +40,89 @@ Add task filtering (e.g., completed, pending)
 
 Todo List for Module Pages with Real Data Integrations for AI Dashboard
 
- 
-WeatherPage
 
- Integrate OpenWeatherMap API:
-Sign up at https://openweathermap.org and store API key in .env as VITE_WEATHER_API_KEY.
-Create src/services/weatherApi.ts with functions for current weather and 5-day forecast.
-Use lat/long or zip code input for location-based queries.
+## **WeatherPage** ✅ COMPLETED
 
+### **Integrate Tomorrow\.io API**
 
- Implement data fetching with react-query:
-Create useWeatherData hook to fetch and cache data (15-minute cache).
-Add retry logic (3 attempts, exponential backoff).
+  ```bash
+  VITE_TOMORROW_API_KEY=your_api_key_here
+  ```
+* Create `src/services/weatherApi.ts` with functions for:
 
+  * **Current weather + UV index + air quality + pollen** from the [Realtime Weather endpoint](https://docs.tomorrow.io/reference/realtime-weather).
+  * **7-day forecast** (daily timeline) from the [Forecast Timelines endpoint](https://docs.tomorrow.io/reference/weather-forecast).
+* Use **lat/long or city/zip code** for location-based queries (Tomorrow\.io supports both — you’ll convert ZIP/city to coordinates using their built-in `location` parameter).
 
- Build UI components:
-Create WeatherCard for current conditions (temperature, humidity, icon).
-Create ForecastList with recharts for daily forecast trends.
-Use lucide-react icons for weather conditions.
+---
 
+### **Implement data fetching with react-query**
 
- Add location input form:
-Use react-hook-form and zod for city/zip code validation.
-Store user’s location in Supabase users table.
+* Create `useWeatherData` hook to:
 
+  * Fetch and cache both **current conditions** and **7-day forecast**.
+  * Use a **15-minute stale time** to avoid excessive API calls (free tier = 500 calls/day).
+  * Include retry logic (3 attempts with exponential backoff) for network resilience.
 
- Handle loading/error states:
-Show shadcn/ui Spinner during API calls.
-Display shadcn/ui Alert for errors with retry button.
+---
 
+### **Build UI components**
 
- Style to match dashboard theme:
-Use Tailwind CSS (bg-background, text-foreground, animate-scale-in).
-Ensure responsive grid for mobile/desktop.
+* **WeatherCard** — shows:
+
+  * Current temperature, humidity, condition icon.
+  * UV index, air quality index, pollen counts (tree/grass/weed).
+  * Use [Tomorrow.io’s icon mapping](https://docs.tomorrow.io/docs/weather-codes) with lucide-react icons.
+* **ForecastList** — uses `recharts` to display:
+
+  * 7-day temperature highs/lows.
+  * Optional secondary axis for UV index trend.
+* Include subtle animations for transitions.
+
+---
+
+### **Add location input form**
+
+* Use `react-hook-form` + `zod` for validation:
+
+  * Accepts **city** or **ZIP code**.
+  * Auto-convert to coordinates for API queries.
+* Store user’s location in Supabase `users` table so it persists across sessions.
+
+---
+
+### **Handle loading/error states**
+
+* Show **shadcn/ui Spinner** during API calls.
+* Show **shadcn/ui Alert** on error:
+
+  * Include a “Retry” button to refetch data.
+
+---
+
+### **Style to match dashboard theme**
+
+* Use Tailwind CSS classes:
+
+  * `bg-background`, `text-foreground`, `animate-scale-in` for load effects.
+* Responsive grid layout:
+
+  * **1-column mobile**, **2–3 column desktop** for WeatherCard + ForecastList.
+
+---
+
+### **Extra Notes for Tomorrow\.io**
+
+* **Free tier limits**: 500 requests/day — batch data when possible.
+* You can request **multiple fields in one call**:
+
+  * Example:
+
+    ```json
+    fields: ["temperature", "humidity", "uvIndex", "epaIndex", "treeIndex", "grassIndex", "weedIndex"]
+    ```
+* Timeline API can return daily forecasts for up to 15 days — use 7 days for your case.
+
 
 
 

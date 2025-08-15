@@ -91,6 +91,119 @@ export type Database = {
           updated_at?: string;
         };
       };
+      calendar_events: {
+        Row: {
+          id: string;
+          user_id: string;
+          title: string;
+          description?: string;
+          date: string;
+          end_date?: string;
+          time?: string;
+          end_time?: string;
+          location?: string;
+          color: string;
+          category: string;
+          recurrence_type: 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly';
+          recurrence_interval: number;
+          recurrence_end_date?: string;
+          recurrence_count?: number;
+          all_day: boolean;
+          reminder_minutes?: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          title: string;
+          description?: string;
+          date: string;
+          end_date?: string;
+          time?: string;
+          end_time?: string;
+          location?: string;
+          color?: string;
+          category?: string;
+          recurrence_type?: 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly';
+          recurrence_interval?: number;
+          recurrence_end_date?: string;
+          recurrence_count?: number;
+          all_day?: boolean;
+          reminder_minutes?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          title?: string;
+          description?: string;
+          date?: string;
+          end_date?: string;
+          time?: string;
+          end_time?: string;
+          location?: string;
+          color?: string;
+          category?: string;
+          recurrence_type?: 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly';
+          recurrence_interval?: number;
+          recurrence_end_date?: string;
+          recurrence_count?: number;
+          all_day?: boolean;
+          reminder_minutes?: number;
+          updated_at?: string;
+        };
+      };
+      user_preferences: {
+        Row: {
+          id: string;
+          user_id: string;
+          weather_location?: {
+            lat: number;
+            lng: number;
+            city?: string;
+            state?: string;
+            country?: string;
+          };
+          news_categories?: string[];
+          theme?: 'light' | 'dark' | 'system';
+          notifications_enabled?: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          weather_location?: {
+            lat: number;
+            lng: number;
+            city?: string;
+            state?: string;
+            country?: string;
+          };
+          news_categories?: string[];
+          theme?: 'light' | 'dark' | 'system';
+          notifications_enabled?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          weather_location?: {
+            lat: number;
+            lng: number;
+            city?: string;
+            state?: string;
+            country?: string;
+          };
+          news_categories?: string[];
+          theme?: 'light' | 'dark' | 'system';
+          notifications_enabled?: boolean;
+          updated_at?: string;
+        };
+      };
     };
   };
 };

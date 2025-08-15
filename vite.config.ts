@@ -8,6 +8,9 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    hmr: {
+      overlay: false, // Disable HMR overlay
+    },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(
     Boolean
@@ -16,5 +19,11 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  build: {
+    sourcemap: mode === 'development', // Only generate source maps in development
+  },
+  define: {
+    __DEV__: mode === 'development',
   },
 }));

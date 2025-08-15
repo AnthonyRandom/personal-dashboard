@@ -13,8 +13,21 @@ A modern, AI-powered personal dashboard web application built with React, TypeSc
 - **Global Search** - Search functionality across dashboard content
 - **Notifications** - Toast notification system for alerts and updates
 
+### Current Integrations
+- **Weather API** - Real-time weather data with Tomorrow.io integration
+  - Current conditions with temperature, humidity, wind, visibility
+  - 7-day forecast with detailed weather information
+  - Hourly forecast for today
+  - Air quality index and UV index
+  - Pollen counts (tree, grass, weed)
+  - Location-based weather data with user preferences
+- **User Authentication** - Supabase authentication with email and Google OAuth
+  - Secure user registration and login
+  - Google OAuth integration
+  - Protected routes and user-specific data
+  - User preferences storage
+
 ### Planned Integrations
-- Weather API for real-time weather data
 - News API for personalized news feeds
 - AI API (xAI Grok) for intelligent insights
 - Calendar integration with event management
@@ -65,7 +78,18 @@ A modern, AI-powered personal dashboard web application built with React, TypeSc
    bun install
    ```
 
-3. **Start development server**
+3. **Set up environment variables**
+   
+   Create a `.env.local` file in the project root with the following variables:
+   ```env
+   VITE_SUPABASE_URL=your_supabase_project_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   VITE_TOMORROW_API_KEY=your_tomorrow_api_key
+   ```
+   
+   See [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) for detailed setup instructions.
+
+4. **Start development server**
    ```bash
    npm run dev
    # or
@@ -73,6 +97,12 @@ A modern, AI-powered personal dashboard web application built with React, TypeSc
    ```
    
    The development server will start at `http://localhost:8080`
+
+### Development Notes
+
+- **Vite Connection Messages**: The `[vite] connecting...` and `[vite] connected.` messages are normal development server logs and can be safely ignored.
+- **Cloudflare Cookie Warning**: The `__cf_bm` cookie warning is related to Cloudflare's bot management and doesn't affect functionality during development.
+- **Source Map Errors**: Some source map warnings may appear in the console but don't impact the application's functionality.
 
 ## Available Scripts
 
